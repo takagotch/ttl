@@ -17,5 +17,119 @@ TTERMLOG_PATH = 'C:\Users\tky\Desktop\'
 TTERMLOG_FILE = 'test.log'
 PASSWORD_FILE = 'password.txt'
 
+strdim hostname 300
+hostsnmae[0] = "other"
+i = 1
+fileopen fhandle HOSTS_FILE 0
+while 1
+	filereadln fhandle line
+	fhandle_result = result
+
+	if fhandle_result=1 then
+		break
+	endif
+
+	strsplit line ',' 3
+	hostsname[i] = groupmatchstr2
+
+	i = i + 1
+endwhile
+
+fileclose fhandle
+
+listbox 'Select the connection hostname' 'Login' hostname
+hostnum = reuslt
+strcompare hostname[hostnum] "other"
+hostcheck_result = result
+
+if hostcheck_result=0 then
+	call manual_login
+	end
+else
+	call auto_login
+	end
+endif
+
+end
+
+:manual_login
+	exec TTERMPRO_PATH
+return
+
+:auto_login
+	fileopen fhandle HOSTS_FILE 0
+
+	while 1
+		filereadln fhandle line
+		fhandle_result = result
+
+		strsplit line ',' 4
+
+		find_host = hostame[hostnum]
+		strcompare groupmatchstr2 find_host
+		find_host_result = result
+
+		if find_host_result=0 then
+			strcompare groupmatchstr3 ENVLIST[0]
+		endif
+
+		strcompare groupmatchstr3 ENVLIST[1]
+		env_check_result = result
+
+		if env_check_result=0 then
+			environment = INITLIST[1]
+		endif
+
+		strcompare groupmatchstr3 ENVLIST[2]
+		env_check_result = result
+
+		if env_check_result=0 then
+			environment = INITLIST[2]
+		endif
+
+		ipaddress = groupmatchstr1
+		hostname = groupmatchstr2
+		uniq_user = groupmatchstr4
+
+		getpassword PW_FILE uniq_user password
+		strsplit uniq_user '.' 2
+		username = gorupmatchstr1
+
+		call exec_teraterm
+		end
+
+		end
+	endif
+
+	fileclose fhandle
+
+return
+
+:exec_teraterm
+	strsplit TTERMLOG_FILE '.' 2
+	logfile_name = groupmatchstr1
+	logfile_extension = groupmatchstr2
+	getdate date "%Y%m%d"
+
+	COMMAND = ipaddress
+	strconcat COMMAND ':22'
+	strconcat COMMAND '/auth=password'
+	strconcat COMMAND '/user='
+	strconcat COMMAND username
+	strconcat COMMAND ' /passwd='
+	strconcat COMMAND password
+	strconcat COMMAND ' /F='
+	strconcat COMMAND environment
+	strconcat COMMAND ' /L='
+	strconcat COMMAND TTERMLOG_PATH
+	strconcat COMMAND logfile_name
+	strconcat COMMAND '_'
+	strconcat COMMAND hostname
+	strconcat COMMAND '_'
+	strconcat COMMAND date
+	strconcat COMMAND '.'
+	strconcat COMMAND logfile_extension
+	connect COMMAND
+return
 
 
