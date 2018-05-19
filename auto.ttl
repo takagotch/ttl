@@ -8,4 +8,14 @@ ENVLIST[0] = 'prd'
 ENVLIST[1] = 'stg'
 ENVLIST[2] = 'dev'
 
+HOSTS_FILE = 'hosts.txt'
+
+PW_FILE = 'password.txt'
+
+TTERMPRO_PATH = 'C:\Program Files (x86)\teraterm/ttermpro.exe'
+TTERMLOG_PATH = 'C:\Users\tky\Desktop\'
+TTERMLOG_FILE = 'test.log'
+PASSWORD_FILE = 'password.txt'
+
+
 
