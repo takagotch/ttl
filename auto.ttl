@@ -1,0 +1,11 @@
+strdim INITLIST 3
+INITLIST[0] = 'prd.ini' 
+INITLIST[1] = 'stg.ini'
+INITLIST[2] = 'dev.ini'
+
+strdim ENVLIST 3
+ENVLIST[0] = 'prd'
+ENVLIST[1] = 'stg'
+ENVLIST[2] = 'dev'
+
+
